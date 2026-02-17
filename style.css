@@ -8,8 +8,8 @@
 
 /* Dark Mode Theme */
 body {
-    background-color: #121212; /* Deep black background */
-    color: #ffffff; /* White text for readability */
+    background-color: #121212;
+    color: #ffffff;
     line-height: 1.6;
 }
 
@@ -28,7 +28,7 @@ body {
 .logo {
     font-size: 24px;
     font-weight: bold;
-    color: #4CAF50; /* Tech-green accent */
+    color: #4CAF50; /* Tech-green */
 }
 
 .nav-links {
@@ -103,3 +103,37 @@ body {
     font-size: 1.5rem;
     margin-bottom: 15px;
     color: #4CAF50;
+}
+
+.card p {
+    color: #cccccc;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #45a049;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 30px;
+    background-color: #1e1e1e;
+    border-top: 1px solid #333;
+    margin-top: 40px;
+    color: #777;
+}
