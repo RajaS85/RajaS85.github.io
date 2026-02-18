@@ -109,18 +109,24 @@
         });
       });
 
-      async function deleteStory(id) {
-        const password = prompt("Enter Admin Password to delete:");
-        // Remember to replace "YourPassword123" with your actual secret code
-        if (password === "YourPassword123") { 
-          if (confirm("Are you sure?")) {
-            await db.collection("stories").doc(id).delete();
-            alert("Deleted!");
-          }
-        } else {
-          alert("Incorrect password!");
-        }
-      }
+      // Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyC_zQZ6bMM-zgcvcmzIkfejYSEoQ4j8cUs",
+  authDomain: "my-second-project-2afd0.firebaseapp.com",
+  databaseURL: "https://my-second-project-2afd0.firebaseio.com",
+  projectId: "my-second-project-2afd0",
+  storageBucket: "my-second-project-2afd0.firebasestorage.app",
+  messagingSenderId: "945694664287",
+  appId: "1:945694664287:web:6d9d943634300e68831dea"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
     </script>
 </body>
 </html>
