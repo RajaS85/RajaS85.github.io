@@ -7,6 +7,29 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyBZdapdPNVVdYyy5GEJJlQ7BTzyuzS6_YU",
+    authDomain: "manhwa-factory.firebaseapp.com",
+    projectId: "manhwa-factory",
+    storageBucket: "manhwa-factory.firebasestorage.app",
+    messagingSenderId: "63608154025",
+    appId: "1:63608154025:web:d25a33904fd554f73686b8",
+    measurementId: "G-KLZTG6PXTC"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
 <div class="card">
   <div class="content">
     <h1 class="name">Raja</h1>
