@@ -27,7 +27,11 @@
         <div class="card">
             <h3>Add a New Story</h3>
             <input type="text" id="storyTitle" placeholder="Story Title" style="width: 100%; margin-bottom: 15px; padding: 12px; background: #222; border: 1px solid #333; color: white;">
-            <textarea id="storyText" placeholder="Write your story here..." rows="8" style="width: 100%; margin-bottom: 15px; padding: 12px; background: #222; border: 1px solid #333; color: white;"></textarea>
+            
+            <textarea id="storyText" oninput="updateCount()" placeholder="Write your story here..." rows="8" style="width: 100%; margin-bottom: 5px; padding: 12px; background: #222; border: 1px solid #333; color: white;"></textarea>
+            
+            <p id="charCount" style="font-size: 0.8rem; color: #888; margin-bottom: 15px;">Characters: 0 / 1000</p>
+            
             <button class="btn" onclick="saveStory()">Post Story</button>
         </div>
     </section>
@@ -42,7 +46,6 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
     <script>
-      // Your Firebase Config Object
       const firebaseConfig = {
         apiKey: "AIzaSyBZdapdPNVVdYyy5GEJJlQ7BTzyuzS6_YU",
         authDomain: "manhwa-factory.firebaseapp.com",
@@ -53,15 +56,28 @@
         measurementId: "G-KLZTG6PXTC"
       };
 
-      // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
       const db = firebase.firestore();
 
-      // Function to Save a New Story
+      // New function to update character count
+      function updateCount() {
+        const text = document.getElementById('storyText').value;
+        const countDisplay = document.getElementById('charCount');
+        countDisplay.innerText = `Characters: ${text.length} / 1000`;
+        
+        // Change color to red if it gets too long
+        if (text.length > 1000) {
+            countDisplay.style.color = "#ff4d4d";
+        } else {
+            countDisplay.style.color = "#888";
+        }
+      }
+
       async function saveStory() {
         const title = document.getElementById('storyTitle').value;
         const text = document.getElementById('storyText').value;
         if(!title || !text) return alert("Please fill both boxes!");
+        if(text.length > 1000) return alert("Story is too long! Keep it under 1000 characters.");
 
         try {
           await db.collection("stories").add({
@@ -72,12 +88,12 @@
           alert("Story Posted!");
           document.getElementById('storyTitle').value = "";
           document.getElementById('storyText').value = "";
+          updateCount(); // Reset count
         } catch (e) {
           console.error("Error adding story: ", e);
         }
       }
 
-      // Function to Pull Stories in Real-Time with Delete Button
       db.collection("stories").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
         const list = document.getElementById('storiesList');
         list.innerHTML = "";
@@ -93,25 +109,18 @@
         });
       });
 
-      // Function to Delete with Secret Password
       async function deleteStory(id) {
         const password = prompt("Enter Admin Password to delete:");
-        
-        // Change "YourPassword123" to whatever you want your secret code to be
+        // Remember to replace "YourPassword123" with your actual secret code
         if (password === "YourPassword123") { 
-          if (confirm("Are you sure you want to remove this story?")) {
-            try {
-              await db.collection("stories").doc(id).delete();
-              alert("Story deleted!");
-            } catch (e) {
-              alert("Delete failed. Check Firebase Rules.");
-            }
+          if (confirm("Are you sure?")) {
+            await db.collection("stories").doc(id).delete();
+            alert("Deleted!");
           }
         } else {
           alert("Incorrect password!");
         }
       }
     </script>
-
 </body>
 </html>
