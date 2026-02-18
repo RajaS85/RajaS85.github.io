@@ -169,7 +169,23 @@ footer {
   opacity: 0.9;
   margin-top: 5px;
 }
+// This function pulls all stories from the "stories" collection in real-time
+db.collection("stories").orderBy("timestamp", "desc").onSnapshot((querySnapshot) => {
+    const container = document.getElementById('storiesContainer');
+    container.innerHTML = ""; // Clear current list to avoid duplicates
 
+    querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const storyCard = `
+            <div class="card">
+                <h3>${data.title}</h3>
+                <p>${data.content.substring(0, 100)}...</p> 
+                <button class="btn" onclick="alert('${data.content}')">Read Full Story</button>
+            </div>
+        `;
+        container.innerHTML += storyCard;
+    });
+});
 .contact-info {
   font-size: 0.9rem;
   line-height: 1.6;
