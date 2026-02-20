@@ -9,19 +9,28 @@
 </head>
 <body>
     <nav class="navbar">
-        <div class="logo">RS<span>.</span></div>
-        <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="manhwa.html">Manhwa Factory</a></li>
-    <li><a href="shayari.html">Shayari</a></li> </ul>
-        <div class="theme-switch-wrapper">
-            <label class="theme-switch" for="checkbox">
-                <input type="checkbox" id="checkbox" />
-                <div class="slider round"></div>
-            </label>
-            <span id="mode-text">Dark</span>
-        </div>
-    </nav>
+    <div class="logo">RS<span>.</span></div>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        
+        <li class="dropdown">
+            <a href="javascript:void(0)" class="dropbtn">Content ▾</a>
+            <div class="dropdown-content">
+                <a href="manhwa.html">Manhwa Factory</a>
+                <a href="shayari.html">Shayari Corner</a>
+                <a href="#software">Software Tools</a>
+            </div>
+        </li>
+    </ul>
+
+    <div class="theme-switch-wrapper">
+        <label class="theme-switch" for="checkbox">
+            <input type="checkbox" id="checkbox" />
+            <div class="slider round"></div>
+        </label>
+        <span id="mode-text">Dark</span>
+    </div>
+</nav>
 
     <header class="hero">
         <div class="hero-contact">
