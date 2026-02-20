@@ -3,38 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manhwa Factory | Raja Sharma</title>
+    <title>Raja Sharma | Creative Developer</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <nav class="navbar">
-        <div class="logo">RS.</div>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="index.html#software">Software</a></li>
-            <li><a href="manhwa.html">Manhwa Factory</a></li>
-            <li><a href="index.html#content">Content</a></li>
-        </ul>
-    </nav>
-
     <header class="hero">
-        <h1>Manhwa Factory</h1>
-        <p>Post and read community stories in real-time.</p>
+        <p>+91 7903650662 | rajasharma3359@gmail.com</p>
+        <h1>Hello!<br>I am <span class="highlight">Raja</span></h1>
+        <p>A Web & Graphic Designer building tools, automating workflows, and creating stories.</p>
+        
+        <div class="cta-group">
+            <a href="#post" class="btn-main">Add Story</a>
+            <a href="index.html" class="btn-outline">About Me</a>
+        </div>
     </header>
 
-    <section class="portfolio-section">
+    <section id="post" style="padding: 100px 50px; max-width: 800px; margin: auto;">
+        <h2 style="font-size: 3rem; margin-bottom: 30px;">Share a Script</h2>
         <div class="card">
-            <h3>Add a New Story</h3>
-            <input type="text" id="storyTitle" placeholder="Story Title" style="width: 100%; margin-bottom: 15px; padding: 12px; background: #222; border: 1px solid #333; color: white; border-radius: 8px;">
-            <textarea id="storyText" oninput="updateCount()" placeholder="Write your story here..." rows="8" style="width: 100%; margin-bottom: 5px; padding: 12px; background: #222; border: 1px solid #333; color: white; border-radius: 8px;"></textarea>
-            <p id="charCount" style="font-size: 0.8rem; color: #888; margin-bottom: 15px;">Characters: 0 / 1000</p>
-            <button class="btn" onclick="saveStory()">Post Story</button>
+            <input type="text" id="storyTitle" placeholder="Project Title" style="width:100%; padding:15px; background:#000; border:1px solid #333; color:white; margin-bottom:20px;">
+            <textarea id="storyText" placeholder="Start typing..." rows="5" style="width:100%; padding:15px; background:#000; border:1px solid #333; color:white; margin-bottom:20px;"></textarea>
+            <button class="btn-main" onclick="saveStory()" style="border:none; cursor:pointer;">Post to Factory</button>
         </div>
     </section>
 
-    <section class="portfolio-section">
-        <h2>Community Stories</h2>
+    <section style="background: #050505; padding: 100px 0;">
+        <h2 style="text-align: center; font-size: 3rem;">Community Stories</h2>
         <div id="storiesList" class="grid-container">
             </div>
     </section>
@@ -43,76 +39,20 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
     <script>
-      // Your Manhwa-Final Config
-      const firebaseConfig = {
-        apiKey: "AIzaSyAhV1QCnWoeNEOJwKWMc0Zrk43WJ6OfPII",
-        authDomain: "manhwa-final.firebaseapp.com",
-        projectId: "manhwa-final",
-        storageBucket: "manhwa-final.firebasestorage.app",
-        messagingSenderId: "657663835445",
-        appId: "1:657663835445:web:be54175c16e3f592bbe07c",
-        measurementId: "G-K7QSBRDZ6N"
-      };
+        const firebaseConfig = {
+            apiKey: "AIzaSyAhV1QCnWoeNEOJwKWMc0Zrk43WJ6OfPII",
+            authDomain: "manhwa-final.firebaseapp.com",
+            projectId: "manhwa-final",
+            storageBucket: "manhwa-final.firebasestorage.app",
+            messagingSenderId: "657663835445",
+            appId: "1:657663835445:web:be54175c16e3f592bbe07c",
+            measurementId: "G-K7QSBRDZ6N"
+        };
 
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-      const db = firebase.firestore();
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
 
-      function updateCount() {
-        const text = document.getElementById('storyText').value;
-        const countDisplay = document.getElementById('charCount');
-        countDisplay.innerText = `Characters: ${text.length} / 1000`;
-        countDisplay.style.color = text.length > 1000 ? "#ff4d4d" : "#888";
-      }
-
-      async function saveStory() {
-        const title = document.getElementById('storyTitle').value;
-        const text = document.getElementById('storyText').value;
-        if(!title || !text) return alert("Please fill both boxes!");
-        if(text.length > 1000) return alert("Story is too long!");
-
-        try {
-          await db.collection("stories").add({
-            title: title,
-            content: text,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-          });
-          alert("Story Posted!");
-          document.getElementById('storyTitle').value = "";
-          document.getElementById('storyText').value = "";
-          updateCount();
-        } catch (e) {
-          console.error("Error: ", e);
-          alert("Check your Firebase Rules!");
-        }
-      }
-
-      db.collection("stories").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
-        const list = document.getElementById('storiesList');
-        list.innerHTML = "";
-        snapshot.forEach((doc) => {
-          const story = doc.data();
-          const storyId = doc.id;
-          list.innerHTML += `
-            <div class="card">
-              <h3>${story.title}</h3>
-              <p>${story.content}</p>
-              <button class="btn" style="background: #ff4d4d; margin-top: 10px;" onclick="deleteStory('${storyId}')">Delete</button>
-            </div>`;
-        });
-      });
-
-      async function deleteStory(id) {
-        const password = prompt("Enter Admin Password:");
-        if (password === "Raja123") { 
-          if(confirm("Are you sure?")) {
-            await db.collection("stories").doc(id).delete();
-            alert("Deleted!");
-          }
-        } else {
-          alert("Wrong password!");
-        }
-      }
+        // [Your existing saveStory and onSnapshot functions go here]
     </script>
 </body>
 </html>
