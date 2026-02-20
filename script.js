@@ -1,95 +1,97 @@
-// Initialize Firebase (Keep your existing config here)
+// 1. Initialize Firebase (Ensure your Firebase Config is here)
+// const firebaseConfig = { ... }; 
+// firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// SAVE STORY WITH SECURITY
+// 2. Save Story Logic (Wordpad Version)
 async function saveStory() {
-    const title = document.getElementById('storyTitle').value;
-    const text = document.getElementById('storyText').value;
-    const author = prompt("Enter Your Name:");
-    const secretCode = prompt("Create a Secret Code to edit/delete this later:");
+    const titleInput = document.getElementById('storyTitle');
+    const contentInput = document.getElementById('storyText'); // This is the editable div
 
-    if(!title || !text || !secretCode) return alert("All fields are required!");
+    const title = titleInput.value;
+    const content = contentInput.innerHTML; // Captures Bold, Italic, and Emojis
+    const author = prompt("Enter your Name (Author):");
+    const secretCode = prompt("Create a secret code to Delete/Edit this story later:");
+
+    // Basic Validation
+    if (!title || content === "Start your script here..." || !secretCode) {
+        return alert("Please fill in the title, content, and secret code!");
+    }
 
     try {
         await db.collection("stories").add({
             title: title,
-            content: text,
-            author: author,
+            content: content,
+            author: author || "Anonymous",
             editCode: secretCode,
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         });
-        alert("Story Published!");
-        location.reload(); 
-    } catch (e) { alert("Error: " + e.message); }
+        alert("Success! Your story is published to the Factory.");
+        
+        // Clear fields and reload
+        titleInput.value = "";
+        contentInput.innerHTML = "Start your script here...";
+        location.reload();
+    } catch (error) {
+        console.error("Error adding document: ", error);
+        alert("Error publishing story. Check console.");
+    }
 }
 
-// LOAD INDEX (Only titles and authors)
+// 3. Load Story Index (Displaying cards on manhwa.html)
 const storiesList = document.getElementById('storiesList');
-if(storiesList) {
-    db.collection("stories").orderBy("timestamp", "desc").onSnapshot(snap => {
-        storiesList.innerHTML = "";
-        snap.forEach(doc => {
-            const s = doc.data();
+if (storiesList) {
+    // Listen for real-time updates from Firestore
+    db.collection("stories").orderBy("timestamp", "desc").onSnapshot((querySnapshot) => {
+        storiesList.innerHTML = ""; // Clear list before reloading
+        
+        querySnapshot.forEach((doc) => {
+            const story = doc.data();
             const id = doc.id;
+
+            // Create a Bootstrap card for the Index
             storiesList.innerHTML += `
-                <div class="card p-3 mb-3" style="background: var(--card-bg); border: 1px solid var(--border);">
-                    <h3>${s.title}</h3>
-                    <p>By: <strong>${s.author || 'Anonymous'}</strong></p>
-                    <div class="d-flex gap-2">
-                        <a href="reader.html?id=${id}" class="btn btn-warning btn-sm">Read Full Story →</a>
-                        <button onclick="secureDelete('${id}', '${s.editCode}')" class="btn btn-danger btn-sm">Delete My Story</button>
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm" style="background: #1a1a1a; border: 1px solid #333; color: white;">
+                        <div class="card-body">
+                            <h4 class="card-title" style="color: #FFB400;">${story.title}</h4>
+                            <p class="card-text text-muted small">By: ${story.author}</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <a href="reader.html?id=${id}" class="btn btn-sm btn-warning">Read Full Story →</a>
+                                <button onclick="secureDelete('${id}', '${story.editCode}')" class="btn btn-sm btn-outline-danger">Delete</button>
+                            </div>
+                        </div>
                     </div>
                 </div>`;
         });
     });
 }
 
-// SECURITY CHECK
-async function secureDelete(id, correctCode) {
-    const userInput = prompt("Enter the Secret Code for this story:");
-    if(userInput === correctCode || userInput === "Raja123") {
-        await db.collection("stories").doc(id).delete();
-        alert("Deleted successfully!");
+// 4. Secure Delete Function (Author-Only)
+async function secureDelete(docId, correctCode) {
+    const userInput = prompt("Enter the Secret Edit Code for this story:");
+
+    // Allow Raja (Admin) or the correct Author to delete
+    if (userInput === correctCode || userInput === "RajaAdmin79") {
+        if (confirm("Are you sure you want to permanently delete this story?")) {
+            await db.collection("stories").doc(docId).delete();
+            alert("Story deleted successfully.");
+        }
     } else {
-        alert("Wrong code! You can only delete your own stories.");
+        alert("Permission Denied: Incorrect Secret Code.");
     }
 }
-async function saveStory() {
-    const title = document.getElementById('storyTitle').value;
-    const author = prompt("Enter your Name:");
-    const editCode = prompt("Create a secret Edit Code for this story:");
-    const text = document.getElementById('storyText').value;
 
-    if(!title || !text || !editCode) return alert("Please fill everything!");
-
-    await db.collection("stories").add({
-        title: title,
-        author: author,
-        content: text,
-        editCode: editCode, // Saved secretly
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+// 5. Theme Toggle Logic (Matches index.html)
+const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
+if (toggleSwitch) {
+    toggleSwitch.addEventListener('change', (e) => {
+        if (e.target.checked) {
+            document.body.classList.add('light-mode');
+            document.getElementById('mode-text').innerText = "Light";
+        } else {
+            document.body.classList.remove('light-mode');
+            document.getElementById('mode-text').innerText = "Dark";
+        }
     });
-    alert("Story Published!");
-}
-snap.forEach(doc => {
-    const s = doc.data();
-    const id = doc.id;
-    storiesList.innerHTML += `
-        <div class="card p-3 mb-3">
-            <h3>${s.title}</h3>
-            <p>By: <strong>${s.author || 'Anonymous'}</strong></p>
-            <a href="reader.html?id=${id}" class="btn-outline">Read Full Story →</a>
-            <button class="btn-sm btn-danger mt-2" onclick="secureDelete('${id}', '${s.editCode}')">Delete My Story</button>
-        </div>`;
-});
-
-// Secure Delete Logic
-async function secureDelete(id, correctCode) {
-    const inputCode = prompt("Enter the secret Edit Code for this story:");
-    if(inputCode === correctCode || inputCode === "Raja123") { // Raja (Admin) can always delete
-        await db.collection("stories").doc(id).delete();
-        alert("Deleted!");
-    } else {
-        alert("Permission Denied! You are not the author.");
-    }
 }
