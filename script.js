@@ -54,3 +54,20 @@ async function secureDelete(id, correctCode) {
         alert("Wrong code! You can only delete your own stories.");
     }
 }
+async function saveStory() {
+    const title = document.getElementById('storyTitle').value;
+    const author = prompt("Enter your Name:");
+    const editCode = prompt("Create a secret Edit Code for this story:");
+    const text = document.getElementById('storyText').value;
+
+    if(!title || !text || !editCode) return alert("Please fill everything!");
+
+    await db.collection("stories").add({
+        title: title,
+        author: author,
+        content: text,
+        editCode: editCode, // Saved secretly
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    alert("Story Published!");
+}
