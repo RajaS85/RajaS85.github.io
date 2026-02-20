@@ -8,14 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="theme-switch-wrapper">
-    <span class="mode-label">Light</span>
-    <label class="theme-switch" for="checkbox">
-        <input type="checkbox" id="checkbox" />
-        <div class="slider round"></div>
-    </label>
-    <span class="mode-label">Dark</span>
-</div>
+
     <nav class="navbar">
         <div class="logo">RS<span>.</span></div>
         <ul class="nav-links">
@@ -23,11 +16,12 @@
             <li><a href="manhwa.html">Manhwa Factory</a></li>
         </ul>
         <div class="theme-switch-wrapper">
+            <span class="mode-label">Light</span>
             <label class="theme-switch" for="checkbox">
                 <input type="checkbox" id="checkbox" />
                 <div class="slider round"></div>
             </label>
-            <span id="mode-text">Dark</span>
+            <span class="mode-label">Dark</span>
         </div>
     </nav>
 
@@ -37,11 +31,8 @@
             <p>rajasharma3359@gmail.com</p>
             <p>New Delhi, India</p>
         </div>
-        
         <h1>Hello!<br>I am <span class="highlight">Raja Sharma</span></h1>
-        
         <p class="hero-subtext">A Creative Graphic Designer & Web Developer building tools, automating workflows, and creating stories.</p>
-        
         <div class="cta-group">
             <a href="manhwa.html" class="btn-main">My Portfolio</a>
             <a href="#software" class="btn-outline">About Me</a>
@@ -57,7 +48,6 @@
                 <p>Automated video splitting and production tool built with Python.</p>
                 <a href="https://ryts.itch.io/" class="link-btn">View Project →</a>
             </div>
-
             <div class="card">
                 <div class="card-tag">Web App</div>
                 <h3>Manhwa Factory</h3>
@@ -69,7 +59,6 @@
 
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-
     <script src="script.js"></script>
 </body>
 </html>
