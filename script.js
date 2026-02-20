@@ -1,153 +1,56 @@
-// 1. FIREBASE CONFIGURATION (Manhwa-Final)
-const firebaseConfig = {
-    apiKey: "AIzaSyAhV1QCnWoeNEOJwKWMc0Zrk43WJ6OfPII",
-    authDomain: "manhwa-final.firebaseapp.com",
-    projectId: "manhwa-final",
-    storageBucket: "manhwa-final.firebasestorage.app",
-    messagingSenderId: "657663835445",
-    appId: "1:657663835445:web:be54175c16e3f592bbe07c",
-    measurementId: "G-K7QSBRDZ6N"
-};
-
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+// Initialize Firebase (Keep your existing config here)
 const db = firebase.firestore();
 
-// 2. THEME TOGGLE LOGIC
-const toggleSwitch = document.querySelector('#checkbox');
-const modeText = document.querySelector('#mode-text');
-
-function switchTheme(e) {
-    if (e.target.checked) {
-        document.body.classList.remove('light-mode');
-        if(modeText) modeText.innerText = "Dark";
-        localStorage.setItem('theme', 'dark');
-    } else {
-        document.body.classList.add('light-mode');
-        if(modeText) modeText.innerText = "Light";
-        localStorage.setItem('theme', 'light');
-    }    
-}
-
-if(toggleSwitch) {
-    toggleSwitch.addEventListener('change', switchTheme);
-}
-
-// Load saved theme preference
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme === 'light') {
-    document.body.classList.add('light-mode');
-    if(toggleSwitch) toggleSwitch.checked = false;
-    if(modeText) modeText.innerText = "Light";
-} else {
-    if(toggleSwitch) toggleSwitch.checked = true;
-    if(modeText) modeText.innerText = "Dark";
-}
-
-// 3. DATABASE FUNCTIONS
-function updateCount() {
-    const text = document.getElementById('storyText').value;
-    const countDisplay = document.getElementById('charCount');
-    if(countDisplay) {
-        countDisplay.innerText = `Characters: ${text.length} / 1000`;
-    }
-}
-
+// SAVE STORY WITH SECURITY
 async function saveStory() {
     const title = document.getElementById('storyTitle').value;
     const text = document.getElementById('storyText').value;
-    if(!title || !text) return alert("Please fill both boxes!");
+    const author = prompt("Enter Your Name:");
+    const secretCode = prompt("Create a Secret Code to edit/delete this later:");
+
+    if(!title || !text || !secretCode) return alert("All fields are required!");
 
     try {
         await db.collection("stories").add({
             title: title,
             content: text,
+            author: author,
+            editCode: secretCode,
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         });
-        alert("Story Posted!");
-        document.getElementById('storyTitle').value = "";
-        document.getElementById('storyText').value = "";
-        updateCount();
-    } catch (e) {
-        alert("Error: Check your Firebase Rules!");
-    }
+        alert("Story Published!");
+        location.reload(); 
+    } catch (e) { alert("Error: " + e.message); }
 }
 
-// 4. REAL-TIME STORIES & DELETE LOGIC
+// LOAD INDEX (Only titles and authors)
 const storiesList = document.getElementById('storiesList');
 if(storiesList) {
     db.collection("stories").orderBy("timestamp", "desc").onSnapshot(snap => {
         storiesList.innerHTML = "";
         snap.forEach(doc => {
             const s = doc.data();
-            const storyId = doc.id; // Correctly grab the ID
+            const id = doc.id;
             storiesList.innerHTML += `
-                <div class="card">
+                <div class="card p-3 mb-3" style="background: var(--card-bg); border: 1px solid var(--border);">
                     <h3>${s.title}</h3>
-                    <p>${s.content}</p>
-                    <button class="btn-delete" onclick="deleteStory('${storyId}')">Delete</button>
+                    <p>By: <strong>${s.author || 'Anonymous'}</strong></p>
+                    <div class="d-flex gap-2">
+                        <a href="reader.html?id=${id}" class="btn btn-warning btn-sm">Read Full Story →</a>
+                        <button onclick="secureDelete('${id}', '${s.editCode}')" class="btn btn-danger btn-sm">Delete My Story</button>
+                    </div>
                 </div>`;
         });
     });
 }
 
-async function deleteStory(id) {
-    const password = prompt("Enter Admin Password to Delete:");
-    if (password === "Raja123") { 
-        if(confirm("Are you sure you want to delete this story forever?")) {
-            try {
-                await db.collection("stories").doc(id).delete();
-                alert("Story deleted!");
-            } catch (error) {
-                alert("Error: " + error.message);
-            }
-        }
+// SECURITY CHECK
+async function secureDelete(id, correctCode) {
+    const userInput = prompt("Enter the Secret Code for this story:");
+    if(userInput === correctCode || userInput === "Raja123") {
+        await db.collection("stories").doc(id).delete();
+        alert("Deleted successfully!");
     } else {
-        alert("Wrong password!");
-    }
-}
-// --- SHAYARI FUNCTIONS ---
-
-async function saveShayari() {
-    const author = document.getElementById('shayariAuthor').value || "Raja";
-    const text = document.getElementById('shayariText').value;
-    if(!text) return alert("Please write something first!");
-
-    try {
-        await db.collection("shayaris").add({
-            author: author,
-            content: text,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        });
-        alert("Shayari shared!");
-        document.getElementById('shayariText').value = "";
-    } catch (e) {
-        alert("Firebase Error!");
-    }
-}
-
-const shayariList = document.getElementById('shayariList');
-if(shayariList) {
-    db.collection("shayaris").orderBy("timestamp", "desc").onSnapshot(snap => {
-        shayariList.innerHTML = "";
-        snap.forEach(doc => {
-            const s = doc.data();
-            const sid = doc.id;
-            shayariList.innerHTML += `
-                <div class="card shayari-item" style="text-align: center; font-style: italic;">
-                    <p style="font-size: 1.5rem; line-height: 1.6;">"${s.content}"</p>
-                    <span style="display: block; margin-top: 10px; color: var(--accent-color); font-weight: bold;">— ${s.author}</span>
-                    <button class="btn-delete" style="padding: 5px 15px; font-size: 0.7rem;" onclick="deleteShayari('${sid}')">Delete</button>
-                </div>`;
-        });
-    });
-}
-
-async function deleteShayari(id) {
-    const pass = prompt("Enter Password:");
-    if(pass === "Raja123") {
-        await db.collection("shayaris").doc(id).delete();
-    } else {
-        alert("Access Denied!");
+        alert("Wrong code! You can only delete your own stories.");
     }
 }
