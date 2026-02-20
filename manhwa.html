@@ -46,38 +46,35 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
     <script>
+      // YOUR NEWEST CONFIG FROM "MY SECOND PROJECT"
       const firebaseConfig = {
-  apiKey: "AIzaSyC_zQZ6bMM-zgcvcmzIkfejYSEoQ4j8cUs",
-  authDomain: "my-second-project-2afd0.firebaseapp.com",
-  databaseURL: "https://my-second-project-2afd0.firebaseio.com",
-  projectId: "my-second-project-2afd0",
-  storageBucket: "my-second-project-2afd0.firebasestorage.app",
-  messagingSenderId: "945694664287",
-  appId: "1:945694664287:web:6d9d943634300e68831dea"
-};
+        apiKey: "AIzaSyC_zQZ6bMM-zgcvcmzIkfejYSE0Q4j8cUs",
+        authDomain: "my-second-project-2afd0.firebaseapp.com",
+        databaseURL: "https://my-second-project-2afd0.firebaseio.com",
+        projectId: "my-second-project-2afd0",
+        storageBucket: "my-second-project-2afd0.firebasestorage.app",
+        messagingSenderId: "945694664287",
+        appId: "1:945694664287:web:db01ec541a03906d831dea"
+      };
 
+      // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
       const db = firebase.firestore();
 
-      // New function to update character count
+      // Update character count
       function updateCount() {
         const text = document.getElementById('storyText').value;
         const countDisplay = document.getElementById('charCount');
         countDisplay.innerText = `Characters: ${text.length} / 1000`;
-        
-        // Change color to red if it gets too long
-        if (text.length > 1000) {
-            countDisplay.style.color = "#ff4d4d";
-        } else {
-            countDisplay.style.color = "#888";
-        }
+        countDisplay.style.color = text.length > 1000 ? "#ff4d4d" : "#888";
       }
 
+      // Save Story
       async function saveStory() {
         const title = document.getElementById('storyTitle').value;
         const text = document.getElementById('storyText').value;
         if(!title || !text) return alert("Please fill both boxes!");
-        if(text.length > 1000) return alert("Story is too long! Keep it under 1000 characters.");
+        if(text.length > 1000) return alert("Story is too long!");
 
         try {
           await db.collection("stories").add({
@@ -88,12 +85,14 @@
           alert("Story Posted!");
           document.getElementById('storyTitle').value = "";
           document.getElementById('storyText').value = "";
-          updateCount(); // Reset count
+          updateCount();
         } catch (e) {
-          console.error("Error adding story: ", e);
+          console.error("Error: ", e);
+          alert("Error: Check your Firebase Rules!");
         }
       }
 
+      // Read Stories in Real-Time
       db.collection("stories").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
         const list = document.getElementById('storiesList');
         list.innerHTML = "";
@@ -104,29 +103,21 @@
             <div class="card">
               <h3>${story.title}</h3>
               <p>${story.content}</p>
-              <button class="btn" style="background: #ff4d4d; margin-top: 10px;" onclick="deleteStory('${storyId}')">Delete Story</button>
+              <button class="btn" style="background: #ff4d4d; margin-top: 10px;" onclick="deleteStory('${storyId}')">Delete</button>
             </div>`;
         });
       });
 
-      // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyC_zQZ6bMM-zgcvcmzIkfejYSEoQ4j8cUs",
-  authDomain: "my-second-project-2afd0.firebaseapp.com",
-  databaseURL: "https://my-second-project-2afd0.firebaseio.com",
-  projectId: "my-second-project-2afd0",
-  storageBucket: "my-second-project-2afd0.firebasestorage.app",
-  messagingSenderId: "945694664287",
-  appId: "1:945694664287:web:6d9d943634300e68831dea"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+      // Delete Story with Password
+      async function deleteStory(id) {
+        const password = prompt("Enter Admin Password:");
+        if (password === "Raja123") { // You can change this secret code
+          await db.collection("stories").doc(id).delete();
+          alert("Deleted!");
+        } else {
+          alert("Wrong password!");
+        }
+      }
     </script>
 </body>
 </html>
