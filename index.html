@@ -3,59 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raja Sharma | Software Portfolio</title>
+    <title>Raja Sharma | Web & Graphic Designer</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="card">
-  <div class="content">
-    <h1 class="name">Raja</h1>
-    <p class="title">🎨 Web and Graphic Designs</p>
-    
-    <div class="contact-info">
-      <p>📞 7903650662</p>
-      <p>✉️ Rajasharma3359@gmail.com</p>
-    </div>
-  </div>
-</div>
+
     <nav class="navbar">
-        <div class="logo">RS.</div>
+        <div class="logo">RS<span>.</span></div>
         <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="#software">Software</a></li>
-    <li><a href="manhwa.html">Manhwa Factory</a></li>
-            <section class="portfolio-section">
-    <h2>Community Stories</h2>
-    <div id="storiesContainer" class="grid-container">
-        </div>
-</section>
-            <li><a href="#content">Content</a></li>
-</ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#software">Software</a></li>
+            <li><a href="manhwa.html">Manhwa Factory</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
     </nav>
 
-    <header id="home" class="hero">
-        <h1>Welcome to My Workspace</h1>
-        <p>Building tools, automating workflows, and creating content.</p>
+    <header class="hero">
+        <div class="contact-info">
+            <p>+91 7903650662</p>
+            <p>rajasharma3359@gmail.com</p>
+            <p>New Delhi, India</p>
+        </div>
+        
+        <h1>Hello!<br>I am <span class="highlight">Raja Sharma</span></h1>
+        
+        <p class="subtext">A Creative Graphic Designer & Web Developer building tools, automating workflows, and creating digital content.</p>
+        
+        <div class="cta-group">
+            <a href="manhwa.html" class="btn-main">View Manhwa Factory</a>
+            <a href="#software" class="btn-outline">My Software</a>
+        </div>
     </header>
 
     <section id="software" class="portfolio-section">
-        <h2>My Software & Tools</h2>
+        <h2 class="section-title">Featured Software</h2>
         <div class="grid-container">
             <div class="card">
-                <h3>Infinity Video Engine</h3>
-                <p>Automating video processing with Python.</p>
-                <button class="btn">View Details</button>
+                <div class="card-tag">Python Tool</div>
+                <h3>Ryts Video Splitter</h3>
+                <p>A professional tool built for fast video splitting and production automation.</p>
+                <a href="https://ryts.itch.io/" class="link-btn">View on itch.io →</a>
             </div>
+
             <div class="card">
-                <h3>Ryts Downloader</h3>
-                <p>Custom YouTube channel archiver using yt-dlp.</p>
-                <button class="btn">View Details</button>
+                <div class="card-tag">Web App</div>
+                <h3>Manhwa Factory</h3>
+                <p>A real-time community hub for sharing and translating manhwa scripts.</p>
+                <a href="manhwa.html" class="link-btn">Launch App →</a>
             </div>
         </div>
     </section>
 
-    <footer>
-        <p>Built from scratch. © 2026 Raja Sharma</p>
+    <footer id="contact">
+        <p>© 2026 Raja Sharma. Let's Connect and Bring Designs to Life!</p>
     </footer>
 
 </body>
