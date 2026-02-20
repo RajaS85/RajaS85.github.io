@@ -3,34 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raja Sharma | Creative Developer</title>
+    <title>Manhwa Factory | Raja Sharma</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
+    <nav class="navbar">
+        <div class="logo">RS<span>.</span></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="manhwa.html">Manhwa Factory</a></li>
+        </ul>
+        <div class="theme-switch-wrapper">
+            <span class="mode-label">Light</span>
+            <label class="theme-switch" for="checkbox">
+                <input type="checkbox" id="checkbox" />
+                <div class="slider round"></div>
+            </label>
+            <span class="mode-label">Dark</span>
+        </div>
+    </nav>
+
     <header class="hero">
         <p>+91 7903650662 | rajasharma3359@gmail.com</p>
-        <h1>Hello!<br>I am <span class="highlight">Raja</span></h1>
-        <p>A Web & Graphic Designer building tools, automating workflows, and creating stories.</p>
+        <h1>Manhwa<br><span class="highlight">Factory</span></h1>
+        <p>A community space for sharing scripts and stories in real-time.</p>
         
         <div class="cta-group">
             <a href="#post" class="btn-main">Add Story</a>
-            <a href="index.html" class="btn-outline">About Me</a>
+            <a href="index.html" class="btn-outline">Back Home</a>
         </div>
     </header>
 
-    <section id="post" style="padding: 100px 50px; max-width: 800px; margin: auto;">
-        <h2 style="font-size: 3rem; margin-bottom: 30px;">Share a Script</h2>
+    <section id="post" class="post-section">
+        <h2 class="section-title">Share a Script</h2>
         <div class="card">
-            <input type="text" id="storyTitle" placeholder="Project Title" style="width:100%; padding:15px; background:#000; border:1px solid #333; color:white; margin-bottom:20px;">
-            <textarea id="storyText" placeholder="Start typing..." rows="5" style="width:100%; padding:15px; background:#000; border:1px solid #333; color:white; margin-bottom:20px;"></textarea>
-            <button class="btn-main" onclick="saveStory()" style="border:none; cursor:pointer;">Post to Factory</button>
+            <input type="text" id="storyTitle" placeholder="Project Title">
+            <textarea id="storyText" oninput="updateCount()" placeholder="Start typing..." rows="8"></textarea>
+            <p id="charCount" style="font-size: 0.8rem; margin-bottom: 15px; opacity: 0.6;">Characters: 0 / 1000</p>
+            <button class="btn-main" onclick="saveStory()" style="border:none; width: 100%; cursor:pointer;">Post to Factory</button>
         </div>
     </section>
 
-    <section style="background: #050505; padding: 100px 0;">
-        <h2 style="text-align: center; font-size: 3rem;">Community Stories</h2>
+    <section class="stories-display">
+        <h2 class="section-title">Community Stories</h2>
         <div id="storiesList" class="grid-container">
             </div>
     </section>
@@ -38,21 +55,6 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyAhV1QCnWoeNEOJwKWMc0Zrk43WJ6OfPII",
-            authDomain: "manhwa-final.firebaseapp.com",
-            projectId: "manhwa-final",
-            storageBucket: "manhwa-final.firebasestorage.app",
-            messagingSenderId: "657663835445",
-            appId: "1:657663835445:web:be54175c16e3f592bbe07c",
-            measurementId: "G-K7QSBRDZ6N"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-
-        // [Your existing saveStory and onSnapshot functions go here]
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
