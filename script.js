@@ -38,3 +38,25 @@ if (currentTheme === 'light') {
     toggleSwitch.checked = true;
     modeText.innerText = "Light";
 }
+const toggleSwitch = document.querySelector('#checkbox');
+
+function switchTheme(e) {
+    if (e.target.checked) {
+        document.body.classList.remove('light-mode');
+        localStorage.setItem('theme', 'dark');
+    } else {
+        document.body.classList.add('light-mode');
+        localStorage.setItem('theme', 'light');
+    }    
+}
+
+toggleSwitch.addEventListener('change', switchTheme, false);
+
+// Check local storage for preference on load
+const currentTheme = localStorage.getItem('theme');
+if (currentTheme === 'light') {
+    document.body.classList.add('light-mode');
+    toggleSwitch.checked = false; // Toggle is 'off' for light
+} else {
+    toggleSwitch.checked = true; // Toggle is 'on' for dark
+}
