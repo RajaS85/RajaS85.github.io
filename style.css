@@ -154,3 +154,61 @@ body {
 
 .highlight { color: var(--accent); }
 .btn-main { background: var(--accent); color: black; }
+/* 1. Colors - Default is DARK */
+:root {
+    --bg-color: #0A0A0A;
+    --text-color: #FFFFFF;
+    --accent-color: #FFB400; /* Your yellow Raja text */
+    --card-bg: #161616;
+}
+
+/* 2. Colors when LIGHT MODE is active */
+body.light-mode {
+    --bg-color: #F4F4F4;
+    --text-color: #1A1A1A;
+    --card-bg: #FFFFFF;
+    --accent-color: #E6A100;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: 0.3s ease; /* Makes the transition smooth */
+}
+
+/* 3. The Toggle Switch Design (Shilpa's Style) */
+.theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: absolute;
+    top: 30px;
+    right: 50px;
+    z-index: 100;
+}
+
+.mode-label { font-size: 0.8rem; font-weight: bold; }
+
+.theme-switch {
+    display: inline-block;
+    height: 24px;
+    position: relative;
+    width: 50px;
+}
+
+.theme-switch input { display: none; }
+
+.slider {
+    background-color: #333;
+    bottom: 0; cursor: pointer; left: 0; position: absolute; right: 0; top: 0;
+    transition: .4s; border-radius: 34px;
+}
+
+.slider:before {
+    background-color: #fff;
+    bottom: 4px; content: ""; height: 16px; left: 4px;
+    position: absolute; transition: .4s; width: 16px; border-radius: 50%;
+}
+
+input:checked + .slider { background-color: var(--accent-color); }
+input:checked + .slider:before { transform: translateX(26px); }
