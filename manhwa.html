@@ -43,7 +43,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
     <script>
-      // 2. YOUR BRAND NEW KEYS FROM MANHWA-FINAL
+      // Your Manhwa-Final Config
       const firebaseConfig = {
         apiKey: "AIzaSyAhV1QCnWoeNEOJwKWMc0Zrk43WJ6OfPII",
         authDomain: "manhwa-final.firebaseapp.com",
@@ -54,7 +54,7 @@
         measurementId: "G-K7QSBRDZ6N"
       };
 
-      // 3. Initialize Firebase
+      // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
       const db = firebase.firestore();
 
@@ -77,13 +77,13 @@
             content: text,
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
           });
-          alert("Story Posted Successfully!");
+          alert("Story Posted!");
           document.getElementById('storyTitle').value = "";
           document.getElementById('storyText').value = "";
           updateCount();
         } catch (e) {
           console.error("Error: ", e);
-          alert("Error: Check your Firebase Rules!");
+          alert("Check your Firebase Rules!");
         }
       }
 
@@ -105,7 +105,7 @@
       async function deleteStory(id) {
         const password = prompt("Enter Admin Password:");
         if (password === "Raja123") { 
-          if(confirm("Confirm deletion?")) {
+          if(confirm("Are you sure?")) {
             await db.collection("stories").doc(id).delete();
             alert("Deleted!");
           }
