@@ -1,4 +1,4 @@
-// 1. Firebase Configuration
+// 1. Firebase Configuration (Manhwa-Final)
 const firebaseConfig = {
     apiKey: "AIzaSyAhV1QCnWoeNEOJwKWMc0Zrk43WJ6OfPII",
     authDomain: "manhwa-final.firebaseapp.com",
@@ -13,50 +13,37 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// 2. Dark Mode Toggle Logic
+// 2. Theme Toggle Logic
 const toggleSwitch = document.querySelector('#checkbox');
 const modeText = document.querySelector('#mode-text');
 
 function switchTheme(e) {
     if (e.target.checked) {
-        document.body.classList.add('light-mode');
-        modeText.innerText = "Light";
-        localStorage.setItem('theme', 'light');
-    } else {
+        // Toggle ON = Dark Mode
         document.body.classList.remove('light-mode');
-        modeText.innerText = "Dark";
-        localStorage.setItem('theme', 'dark');
-    }    
-}
-
-toggleSwitch.addEventListener('change', switchTheme, false);
-
-// Check for saved user preference on load
-const currentTheme = localStorage.getItem('theme');
-if (currentTheme === 'light') {
-    document.body.classList.add('light-mode');
-    toggleSwitch.checked = true;
-    modeText.innerText = "Light";
-}
-const toggleSwitch = document.querySelector('#checkbox');
-
-function switchTheme(e) {
-    if (e.target.checked) {
-        document.body.classList.remove('light-mode');
+        if (modeText) modeText.innerText = "Dark";
         localStorage.setItem('theme', 'dark');
     } else {
+        // Toggle OFF = Light Mode
         document.body.classList.add('light-mode');
+        if (modeText) modeText.innerText = "Light";
         localStorage.setItem('theme', 'light');
     }    
 }
 
-toggleSwitch.addEventListener('change', switchTheme, false);
+// Add the listener once
+if (toggleSwitch) {
+    toggleSwitch.addEventListener('change', switchTheme, false);
+}
 
-// Check local storage for preference on load
+// 3. Load Saved Preference
 const currentTheme = localStorage.getItem('theme');
 if (currentTheme === 'light') {
     document.body.classList.add('light-mode');
-    toggleSwitch.checked = false; // Toggle is 'off' for light
+    if (toggleSwitch) toggleSwitch.checked = false;
+    if (modeText) modeText.innerText = "Light";
 } else {
-    toggleSwitch.checked = true; // Toggle is 'on' for dark
+    document.body.classList.remove('light-mode');
+    if (toggleSwitch) toggleSwitch.checked = true;
+    if (modeText) modeText.innerText = "Dark";
 }
