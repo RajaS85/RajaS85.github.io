@@ -106,3 +106,48 @@ async function deleteStory(id) {
         alert("Wrong password!");
     }
 }
+// --- SHAYARI FUNCTIONS ---
+
+async function saveShayari() {
+    const author = document.getElementById('shayariAuthor').value || "Raja";
+    const text = document.getElementById('shayariText').value;
+    if(!text) return alert("Please write something first!");
+
+    try {
+        await db.collection("shayaris").add({
+            author: author,
+            content: text,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        alert("Shayari shared!");
+        document.getElementById('shayariText').value = "";
+    } catch (e) {
+        alert("Firebase Error!");
+    }
+}
+
+const shayariList = document.getElementById('shayariList');
+if(shayariList) {
+    db.collection("shayaris").orderBy("timestamp", "desc").onSnapshot(snap => {
+        shayariList.innerHTML = "";
+        snap.forEach(doc => {
+            const s = doc.data();
+            const sid = doc.id;
+            shayariList.innerHTML += `
+                <div class="card shayari-item" style="text-align: center; font-style: italic;">
+                    <p style="font-size: 1.5rem; line-height: 1.6;">"${s.content}"</p>
+                    <span style="display: block; margin-top: 10px; color: var(--accent-color); font-weight: bold;">— ${s.author}</span>
+                    <button class="btn-delete" style="padding: 5px 15px; font-size: 0.7rem;" onclick="deleteShayari('${sid}')">Delete</button>
+                </div>`;
+        });
+    });
+}
+
+async function deleteShayari(id) {
+    const pass = prompt("Enter Password:");
+    if(pass === "Raja123") {
+        await db.collection("shayaris").doc(id).delete();
+    } else {
+        alert("Access Denied!");
+    }
+}
