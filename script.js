@@ -47,3 +47,49 @@ if (currentTheme === 'light') {
     if (toggleSwitch) toggleSwitch.checked = true;
     if (modeText) modeText.innerText = "Dark";
 }
+// Function to update character count
+function updateCount() {
+    const text = document.getElementById('storyText').value;
+    const countDisplay = document.getElementById('charCount');
+    if (countDisplay) {
+        countDisplay.innerText = `Characters: ${text.length} / 1000`;
+        countDisplay.style.color = text.length > 1000 ? "#ff4d4d" : "";
+    }
+}
+
+// Function to Save a Story
+async function saveStory() {
+    const title = document.getElementById('storyTitle').value;
+    const text = document.getElementById('storyText').value;
+    if(!title || !text) return alert("Please fill both boxes!");
+
+    try {
+        await db.collection("stories").add({
+            title: title,
+            content: text,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        alert("Story Posted!");
+        document.getElementById('storyTitle').value = "";
+        document.getElementById('storyText').value = "";
+        updateCount();
+    } catch (e) {
+        alert("Error: Check your Firebase Rules!");
+    }
+}
+
+// Pull Stories in Real-Time (Only run if storiesList exists on the page)
+const list = document.getElementById('storiesList');
+if (list) {
+    db.collection("stories").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
+        list.innerHTML = "";
+        snapshot.forEach((doc) => {
+            const story = doc.data();
+            list.innerHTML += `
+                <div class="card">
+                    <h3>${story.title}</h3>
+                    <p>${story.content}</p>
+                </div>`;
+        });
+    });
+}
