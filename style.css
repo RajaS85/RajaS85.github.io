@@ -1,45 +1,47 @@
-/* 1. Variables & Themes */
+/* 1. THEME VARIABLES */
 :root {
     --bg-color: #0A0A0A;
     --text-color: #FFFFFF;
-    --accent-color: #FFB400; /* Raja Yellow */
     --card-bg: #161616;
-    --border: #333333;
-    --hero-font-size: clamp(3rem, 10vw, 8rem);
+    --accent-color: #FFB400; /* Raja Yellow */
+    --border-color: #333333;
+    --hero-font: 'Inter', sans-serif;
 }
 
+/* Light Mode Overrides */
 body.light-mode {
     --bg-color: #F8F9FA;
     --text-color: #1A1A1A;
     --card-bg: #FFFFFF;
     --accent-color: #D49600;
-    --border: #DEE2E6;
+    --border-color: #DEE2E6;
 }
 
-/* 2. Core Styles */
+/* 2. CORE BODY STYLES */
 body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color) !important;
+    color: var(--text-color) !important;
+    font-family: var(--hero-font);
+    transition: background-color 0.3s ease, color 0.3s ease;
     margin: 0;
-    transition: all 0.3s ease;
+    overflow-x: hidden;
 }
 
-/* 3. Hero Section (The "HELLO!" Screen) */
+/* 3. HERO SECTION (HELLO! I AM RAJA) */
 .hero {
     height: 90vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 20px;
-    background: var(--bg-color);
+    background-color: var(--bg-color) !important;
 }
 
 .hero h1 {
-    font-size: var(--hero-font-size);
+    font-size: clamp(3rem, 10vw, 6rem);
     font-weight: 900;
-    line-height: 0.9;
+    line-height: 1;
     text-transform: uppercase;
 }
 
@@ -47,42 +49,41 @@ body {
     color: var(--accent-color);
 }
 
-.hero-subtext {
-    font-size: 1.2rem;
-    max-width: 600px;
-    margin: 20px auto;
-    opacity: 0.8;
+/* 4. NAVBAR STYLING */
+.navbar {
+    background-color: #000 !important;
+    border-bottom: 1px solid var(--border-color);
 }
 
-/* 4. Custom Buttons */
-.btn-main {
-    background-color: var(--accent-color);
-    color: #000;
-    padding: 15px 35px;
-    border-radius: 8px;
-    font-weight: 900;
-    text-decoration: none;
-    transition: 0.3s;
-    border: none;
+body.light-mode .navbar {
+    background-color: #FFFFFF !important;
+    border-bottom: 1px solid #DEE2E6;
 }
 
-.btn-main:hover {
-    background-color: #fff;
-    color: #000;
-    transform: translateY(-3px);
+body.light-mode .nav-link, 
+body.light-mode .navbar-brand,
+body.light-mode #mode-text {
+    color: #1A1A1A !important;
 }
 
-.btn-outline {
-    border: 2px solid var(--text-color);
-    color: var(--text-color);
-    padding: 13px 35px;
-    border-radius: 8px;
-    font-weight: 700;
-    text-decoration: none;
-    transition: 0.3s;
+/* 5. WORDPAD & CARDS */
+.card {
+    background-color: var(--card-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-color) !important;
+    border-radius: 12px !important;
 }
 
-/* 5. Theme Toggle Switch (Shilpa Style) */
+#storyText {
+    min-height: 350px;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    outline: none;
+    background-color: #FFFFFF !important; /* Notepad always white for readability */
+    color: #000000 !important;
+}
+
+/* 6. THEME TOGGLE SWITCH */
 .theme-switch {
     display: inline-block;
     height: 28px;
@@ -114,32 +115,14 @@ body {
 input:checked + .slider { background-color: var(--accent-color); }
 input:checked + .slider:before { transform: translateX(26px); }
 
-/* 6. Wordpad & Cards */
-.card {
-    background-color: var(--card-bg) !important;
-    border: 1px solid var(--border) !important;
-    color: var(--text-color) !important;
-    border-radius: 12px !important;
-    transition: transform 0.3s ease;
-}
-
-#storyText {
-    min-height: 300px;
-    font-size: 1.1rem;
-    line-height: 1.6;
-    outline: none;
-}
-
-/* 7. Dropdown Styling Fixes */
+/* 7. DROPDOWN FIXES */
 .dropdown-menu {
     background-color: var(--card-bg) !important;
-    border: 1px solid var(--border) !important;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border: 1px solid var(--border-color) !important;
 }
 
 .dropdown-item {
     color: var(--text-color) !important;
-    padding: 10px 20px;
 }
 
 .dropdown-item:hover {
