@@ -47,3 +47,19 @@ body {
 .slider:before { background-color: #fff; content: ""; height: 16px; width: 16px; left: 4px; bottom: 4px; position: absolute; transition: .4s; border-radius: 50%; }
 input:checked + .slider { background-color: var(--accent-color); }
 input:checked + .slider:before { transform: translateX(26px); }
+.btn-delete {
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 4px;
+    margin-top: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-delete:hover {
+    background: #cc0000;
+    transform: scale(1.05);
+}
