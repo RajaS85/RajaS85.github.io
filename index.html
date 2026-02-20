@@ -4,42 +4,107 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Raja Sharma | Creative Developer</title>
+    
     <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/48/source-code.png">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap" rel="stylesheet">
 </head>
 <body>
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container-fluid px-4">
-            <a class="navbar-brand logo d-flex align-items-center" href="index.html">
+            <a class="navbar-brand logo d-flex align-items-center" href="index.html" style="font-weight: 900; color: #fff;">
                 <img src="https://img.icons8.com/fluency/32/source-code.png" alt="Logo" class="me-2">
                 RS<span style="color: #FFB400;">.</span>
             </a>
-            <div id="google_translate_element" class="ms-auto me-3"></div>
             
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Home</a>
+                    </li>
+                    
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="contentDrop" data-bs-toggle="dropdown">Content</a>
-                        <ul class="dropdown-menu dropdown-menu-dark">
+                        <a class="nav-link dropdown-toggle" href="#" id="contentDrop" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Content
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="contentDrop">
                             <li><a class="dropdown-item" href="manhwa.html">Manhwa Factory</a></li>
                             <li><a class="dropdown-item" href="shayari.html">Shayari Corner</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#software">Software Tools</a></li>
                         </ul>
                     </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
                 </ul>
+
+                <div class="theme-switch-wrapper d-flex align-items-center">
+                    <label class="theme-switch" for="checkbox">
+                        <input type="checkbox" id="checkbox" />
+                        <div class="slider round"></div>
+                    </label>
+                    <span id="mode-text" class="ms-2 text-white">Dark</span>
+                </div>
             </div>
         </div>
     </nav>
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-          new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
-        }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <header class="hero">
+        <div class="hero-contact">
+            <p>+91 7903650662 | rajasharma3359@gmail.com</p>
+        </div>
+        <h1>Hello!<br>I am <span class="highlight">Raja Sharma</span></h1>
+        <p class="hero-subtext">A Web & Graphic Designer building tools, automating workflows, and creating stories.</p>
+        <div class="cta-group">
+            <a href="manhwa.html" class="btn-main">My Portfolio</a>
+            <a href="#software" class="btn-outline">About Me</a>
+        </div>
+    </header>
+
+    <section id="software" class="portfolio-section container py-5">
+        <h2 class="section-title text-center mb-5">Featured Work</h2>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="card p-4">
+                    <div class="card-tag">Software</div>
+                    <h3>Ryts Video Tool</h3>
+                    <p>Automated video production tool built with Python.</p>
+                    <a href="https://rajasharma85.itch.io/ryts-youtube-archiver" class="link-btn">View Project →</a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card p-4">
+                    <div class="card-tag">Web App</div>
+                    <h3>Manhwa Factory</h3>
+                    <p>Real-time community hub for sharing scripts.</p>
+                    <a href="https://rajasharma85.itch.io/infinity-video-engine" class="link-btn">Open App →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="portfolio-section container py-5 text-center">
+        <h2 class="section-title mb-4">Get In <span class="highlight">Touch</span></h2>
+        <div class="card p-5 mx-auto" style="max-width: 600px;">
+            <p>Have a project in mind? Let's build something great together.</p>
+            <a href="mailto:rajasharma3359@gmail.com" class="btn-main mt-3 d-inline-block">Email Me</a>
+        </div>
+    </section>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
