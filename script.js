@@ -71,3 +71,25 @@ async function saveStory() {
     });
     alert("Story Published!");
 }
+snap.forEach(doc => {
+    const s = doc.data();
+    const id = doc.id;
+    storiesList.innerHTML += `
+        <div class="card p-3 mb-3">
+            <h3>${s.title}</h3>
+            <p>By: <strong>${s.author || 'Anonymous'}</strong></p>
+            <a href="reader.html?id=${id}" class="btn-outline">Read Full Story →</a>
+            <button class="btn-sm btn-danger mt-2" onclick="secureDelete('${id}', '${s.editCode}')">Delete My Story</button>
+        </div>`;
+});
+
+// Secure Delete Logic
+async function secureDelete(id, correctCode) {
+    const inputCode = prompt("Enter the secret Edit Code for this story:");
+    if(inputCode === correctCode || inputCode === "Raja123") { // Raja (Admin) can always delete
+        await db.collection("stories").doc(id).delete();
+        alert("Deleted!");
+    } else {
+        alert("Permission Denied! You are not the author.");
+    }
+}
