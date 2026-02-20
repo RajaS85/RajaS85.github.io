@@ -4,49 +4,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manhwa Factory | Raja Sharma</title>
+    <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/48/source-code.png">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="logo">RS<span>.</span></div>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="manhwa.html">Manhwa Factory</a></li>
-        </ul>
-        <div class="theme-switch-wrapper">
-            <label class="theme-switch" for="checkbox">
-                <input type="checkbox" id="checkbox" />
-                <div class="slider round"></div>
-            </label>
-            <span id="mode-text">Dark</span>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand logo d-flex align-items-center" href="index.html">
+                <img src="https://img.icons8.com/fluency/32/source-code.png" alt="Logo" class="me-2">
+                RS<span style="color: #FFB400;">.</span>
+            </a>
+
+            <div id="google_translate_element" class="ms-3"></div>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="contentDrop" data-bs-toggle="dropdown">Content</a>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><a class="dropdown-item" href="manhwa.html">Manhwa Factory</a></li>
+                            <li><a class="dropdown-item" href="shayari.html">Shayari Corner</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <header class="hero">
-        <h1>Manhwa<br><span class="highlight">Factory</span></h1>
-        <div class="cta-group">
-            <a href="#post" class="btn-main">Add Story</a>
+    <div class="container mt-5">
+        <div class="card p-4 shadow-lg mb-5" style="background: #1e1e1e; border: 1px solid #333; max-width: 900px; margin: auto;">
+            <h2 class="mb-4" style="color: #FFB400;">Script Wordpad</h2>
+            
+            <input type="text" id="storyTitle" class="form-control mb-3 bg-dark text-white border-secondary" placeholder="Project Title...">
+
+            <div class="d-flex gap-2 p-2 bg-secondary rounded-top border-bottom border-dark">
+                <button class="btn btn-sm btn-dark" onclick="document.execCommand('bold')"><b>B</b></button>
+                <button class="btn btn-sm btn-dark" onclick="document.execCommand('italic')"><i>I</i></button>
+                <button class="btn btn-sm btn-dark" onclick="document.execCommand('underline')"><u>U</u></button>
+                <button class="btn btn-sm btn-dark" onclick="document.execCommand('insertText', false, '🔥')">🔥</button>
+                <button class="btn btn-sm btn-dark" onclick="document.execCommand('insertText', false, '🎬')">🎬</button>
+                <button class="btn btn-sm btn-dark" onclick="document.execCommand('insertText', false, '✨')">✨</button>
+            </div>
+
+            <div id="storyText" contenteditable="true" class="form-control bg-white text-dark rounded-bottom p-3" 
+                 style="height: 400px; overflow-y: auto; font-family: 'Segoe UI', sans-serif;">
+                 Start your script here...
+            </div>
+
+            <button class="btn btn-warning mt-4 w-100 fw-bold" onclick="saveStory()">Publish to Factory Index</button>
         </div>
-    </header>
 
-    <section id="post" class="portfolio-section" style="max-width: 800px; margin: auto;">
-        <div class="card">
-            <h3>Share a Script</h3>
-            <input type="text" id="storyTitle" placeholder="Project Title">
-            <textarea id="storyText" oninput="updateCount()" placeholder="Start typing..." rows="8"></textarea>
-            <p id="charCount" style="font-size: 0.8rem; margin-top: 5px; opacity: 0.7;">Characters: 0 / 1000</p>
-            <button class="btn-main" onclick="saveStory()" style="width: 100%; border: none; margin-top: 20px; cursor: pointer;">Post Story</button>
+        <hr style="border-color: #444;">
+
+        <div class="mt-5">
+            <h2 class="mb-4 text-center">Community Stories</h2>
+            <div id="storiesList" class="row g-4">
+                </div>
         </div>
-    </section>
+    </div>
 
-    <section class="portfolio-section">
-        <h2 class="section-title">Community Stories</h2>
-        <div id="storiesList" class="grid-container"></div>
-    </section>
-
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+          new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
