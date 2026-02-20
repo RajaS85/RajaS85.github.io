@@ -1,192 +1,90 @@
-/* Reset basic settings */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+/* Core Styling */
+:root {
+    --primary: #FFB400; /* Yellow accent like Shilpa's site */
+    --bg: #0A0A0A;
+    --card-bg: #161616;
 }
 
-/* Dark Mode Theme */
 body {
-    background-color: #121212;
-    color: #ffffff;
-    line-height: 1.6;
-}
-
-/* Navigation Bar */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 50px;
-    background-color: #1e1e1e;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
-.logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: #4CAF50; /* Tech-green */
-}
-
-.nav-links {
-    list-style: none;
-    display: flex;
-    gap: 20px;
-}
-
-.nav-links a {
+    background-color: var(--bg);
     color: white;
-    text-decoration: none;
-    transition: color 0.3s ease;
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    overflow-x: hidden;
 }
 
-.nav-links a:hover {
-    color: #4CAF50;
-}
-
-/* Hero Section */
+/* Big Hero Section */
 .hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    padding: 100px 20px;
-    background: linear-gradient(135deg, #1e1e1e 0%, #121212 100%);
-    border-bottom: 1px solid #333;
+    background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
 }
 
 .hero h1 {
-    font-size: 3rem;
-    margin-bottom: 10px;
+    font-size: clamp(3rem, 10vw, 8rem); /* Massive responsive text */
+    font-weight: 900;
+    line-height: 0.9;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.hero .highlight {
+    color: var(--primary);
 }
 
 .hero p {
     font-size: 1.2rem;
-    color: #aaaaaa;
+    color: #888;
+    margin-top: 20px;
+    max-width: 600px;
 }
 
-/* Portfolio Sections */
-.portfolio-section {
-    padding: 60px 50px;
+/* Action Buttons */
+.cta-group {
+    margin-top: 40px;
+    display: flex;
+    gap: 20px;
 }
 
-.portfolio-section h2 {
-    font-size: 2rem;
-    margin-bottom: 30px;
-    border-left: 4px solid #4CAF50;
-    padding-left: 10px;
+.btn-main {
+    background: var(--primary);
+    color: black;
+    padding: 15px 40px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: 0.3s;
 }
 
-/* Grid Layout */
+.btn-outline {
+    border: 1px solid #333;
+    color: white;
+    padding: 15px 40px;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+/* Story Cards */
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 30px;
+    padding: 50px;
 }
 
-/* Project Cards */
 .card {
-    background-color: #1e1e1e;
-    padding: 25px;
-    border-radius: 8px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid #333;
+    background: var(--card-bg);
+    border: 1px solid #222;
+    padding: 30px;
+    border-radius: 12px;
+    transition: 0.3s ease;
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-    border-color: #4CAF50;
-}
-
-.card h3 {
-    font-size: 1.5rem;
-    margin-bottom: 15px;
-    color: #4CAF50;
-}
-
-.card p {
-    color: #cccccc;
-    margin-bottom: 20px;
-    font-size: 0.95rem;
-}
-
-/* Buttons */
-.btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: #ffffff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-}
-
-.btn:hover {
-    background-color: #45a049;
-}
-
-/* Footer */
-footer {
-    text-align: center;
-    padding: 30px;
-    background-color: #1e1e1e;
-    border-top: 1px solid #333;
-    margin-top: 40px;
-    color: #777;
-}
-.card {
-  width: 450px;
-  height: 250px;
-  border-radius: 12px;
-  padding: 30px;
-  color: white;
-  font-family: 'Arial', sans-serif;
-  
-  /* Recreating that purple-to-orange flow */
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364, #a83279, #ed8f03);
-  
-  /* Adding a subtle border/shadow to make it pop */
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-  
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.name {
-  font-size: 3rem;
-  font-style: italic;
-  font-weight: bold;
-  margin: 0;
-}
-
-.title {
-  font-size: 1.1rem;
-  opacity: 0.9;
-  margin-top: 5px;
-}
-// This function pulls all stories from the "stories" collection in real-time
-db.collection("stories").orderBy("timestamp", "desc").onSnapshot((querySnapshot) => {
-    const container = document.getElementById('storiesContainer');
-    container.innerHTML = ""; // Clear current list to avoid duplicates
-
-    querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        const storyCard = `
-            <div class="card">
-                <h3>${data.title}</h3>
-                <p>${data.content.substring(0, 100)}...</p> 
-                <button class="btn" onclick="alert('${data.content}')">Read Full Story</button>
-            </div>
-        `;
-        container.innerHTML += storyCard;
-    });
-});
-.contact-info {
-  font-size: 0.9rem;
-  line-height: 1.6;
+    border-color: var(--primary);
+    transform: translateY(-10px);
 }
