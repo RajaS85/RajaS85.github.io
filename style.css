@@ -1,19 +1,32 @@
-/* Core Styling */
+/* 1. GLOBAL VARIABLES - The "Brain" of your colors */
 :root {
-    --primary: #FFB400; /* Yellow accent like Shilpa's site */
-    --bg: #0A0A0A;
+    --bg-color: #0A0A0A;
+    --text-color: #FFFFFF;
+    --accent-color: #FFB400; /* Raja Yellow */
     --card-bg: #161616;
+    --border-color: #222;
 }
 
+/* 2. LIGHT MODE OVERRIDES - What changes when you click the button */
+body.light-mode {
+    --bg-color: #F4F4F4;
+    --text-color: #1A1A1A;
+    --card-bg: #FFFFFF;
+    --accent-color: #E6A100;
+    --border-color: #DDD;
+}
+
+/* 3. CORE BODY STYLING */
 body {
-    background-color: var(--bg);
-    color: white;
+    background-color: var(--bg-color);
+    color: var(--text-color);
     font-family: 'Inter', sans-serif;
     margin: 0;
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Big Hero Section */
+/* 4. HERO SECTION (HELLO I AM RAJA) */
 .hero {
     height: 100vh;
     display: flex;
@@ -21,54 +34,29 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
+    padding: 0 20px;
 }
 
 .hero h1 {
-    font-size: clamp(3rem, 10vw, 8rem); /* Massive responsive text */
+    font-size: clamp(4rem, 12vw, 10rem);
     font-weight: 900;
-    line-height: 0.9;
-    margin: 0;
+    line-height: 0.85;
+    letter-spacing: -4px;
+    margin: 20px 0;
     text-transform: uppercase;
 }
 
-.hero .highlight {
-    color: var(--primary);
+.highlight {
+    color: var(--accent-color);
 }
 
-.hero p {
-    font-size: 1.2rem;
+.hero-contact {
+    font-size: 0.9rem;
     color: #888;
-    margin-top: 20px;
-    max-width: 600px;
+    margin-bottom: 10px;
 }
 
-/* Action Buttons */
-.cta-group {
-    margin-top: 40px;
-    display: flex;
-    gap: 20px;
-}
-
-.btn-main {
-    background: var(--primary);
-    color: black;
-    padding: 15px 40px;
-    font-weight: bold;
-    text-decoration: none;
-    border-radius: 4px;
-    transition: 0.3s;
-}
-
-.btn-outline {
-    border: 1px solid #333;
-    color: white;
-    padding: 15px 40px;
-    text-decoration: none;
-    border-radius: 4px;
-}
-
-/* Story Cards */
+/* 5. CARDS & GRID */
 .grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -77,106 +65,38 @@ body {
 }
 
 .card {
-    background: var(--card-bg);
-    border: 1px solid #222;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
     padding: 30px;
     border-radius: 12px;
     transition: 0.3s ease;
 }
 
-.card:hover {
-    border-color: var(--primary);
-    transform: translateY(-10px);
-}
-/* Styling for the Hero Text */
-.hero h1 {
-    font-size: clamp(4rem, 12vw, 10rem); /* Massive Impact Text */
-    font-weight: 900;
-    line-height: 0.85;
-    letter-spacing: -4px;
-    margin: 20px 0;
-    text-transform: uppercase;
+.card h3 { color: var(--accent-color); }
+.card p { color: var(--text-color); opacity: 0.8; }
+
+/* 6. BUTTONS */
+.btn-main {
+    background: var(--accent-color);
+    color: black;
+    padding: 15px 40px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 4px;
+    display: inline-block;
+    transition: 0.3s;
 }
 
-.hero .contact-info {
-    font-size: 0.9rem;
-    color: #888;
-    text-align: left;
-    width: 100%;
-    padding-left: 10%;
-    margin-bottom: -20px;
-}
-
-.subtext {
-    max-width: 700px;
-    font-size: 1.2rem;
-    color: #bbb;
-    margin-top: 10px;
-}
-
-/* Section Titles */
-.section-title {
-    font-size: 3rem;
-    text-align: center;
-    margin-bottom: 50px;
-    font-weight: 900;
-    text-transform: uppercase;
-}
-
-/* Navbar Logo */
-.logo {
-    font-weight: 900;
-    font-size: 1.5rem;
-}
-
-.logo span {
-    color: var(--primary);
-}
-:root {
-    --bg: #0A0A0A;
-    --text: #FFFFFF;
-    --accent: #FFB400; /* Yellow accent */
-    --card: #161616;
-}
-
-body.light-mode {
-    --bg: #F5F5F5;
-    --text: #1A1A1A;
-    --card: #FFFFFF;
-    --accent: #E6A100;
-}
-
-body {
-    background-color: var(--bg);
-    color: var(--text);
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.highlight { color: var(--accent); }
-.btn-main { background: var(--accent); color: black; }
-/* 1. Colors - Default is DARK */
-:root {
-    --bg-color: #0A0A0A;
-    --text-color: #FFFFFF;
-    --accent-color: #FFB400; /* Your yellow Raja text */
-    --card-bg: #161616;
-}
-
-/* 2. Colors when LIGHT MODE is active */
-body.light-mode {
-    --bg-color: #F4F4F4;
-    --text-color: #1A1A1A;
-    --card-bg: #FFFFFF;
-    --accent-color: #E6A100;
-}
-
-body {
-    background-color: var(--bg-color);
+.btn-outline {
+    border: 1px solid var(--border-color);
     color: var(--text-color);
-    transition: 0.3s ease; /* Makes the transition smooth */
+    padding: 15px 40px;
+    text-decoration: none;
+    border-radius: 4px;
+    display: inline-block;
 }
 
-/* 3. The Toggle Switch Design (Shilpa's Style) */
+/* 7. THE TOGGLE SWITCH (Positioned Top Right) */
 .theme-switch-wrapper {
     display: flex;
     align-items: center;
@@ -186,8 +106,6 @@ body {
     right: 50px;
     z-index: 100;
 }
-
-.mode-label { font-size: 0.8rem; font-weight: bold; }
 
 .theme-switch {
     display: inline-block;
