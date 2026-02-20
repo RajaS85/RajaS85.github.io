@@ -132,3 +132,25 @@ body {
 .logo span {
     color: var(--primary);
 }
+:root {
+    --bg: #0A0A0A;
+    --text: #FFFFFF;
+    --accent: #FFB400; /* Yellow accent */
+    --card: #161616;
+}
+
+body.light-mode {
+    --bg: #F5F5F5;
+    --text: #1A1A1A;
+    --card: #FFFFFF;
+    --accent: #E6A100;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.highlight { color: var(--accent); }
+.btn-main { background: var(--accent); color: black; }
